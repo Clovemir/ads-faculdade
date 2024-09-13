@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js To-Do List</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <div class="todo-container">
+      <h1 class="title">Minha Lista de Tarefas</h1>
+
+      <!-- Campo de texto para inserir nova tarefa -->
+      <div class="input-group">
+        <input type="text" v-model="novaTarefa" placeholder="Digite sua tarefa...">
+        <!-- Botão para adicionar tarefa -->
+        <button @click="adicionarTarefa">+</button>
+      </div>
+
+      <!-- Lista de tarefas -->
+      <ul>
+        <li v-for="(tarefa, index) in tarefas" :key="index">
+          <span>{{ tarefa }}</span>
+          <!-- Botão para remover tarefa -->
+          <button class="remove-btn" @click="removerTarefa(index)">&#10005;</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        novaTarefa: '',
+        tarefas: []
+      },
+      methods: {
+        adicionarTarefa() {
+          if (this.novaTarefa !== '') {
+            this.tarefas.push(this.novaTarefa);
+            this.novaTarefa = ''; // Limpa o campo de texto após adicionar
+          }
+        },
+        removerTarefa(index) {
+          this.tarefas.splice(index, 1); // Remove a tarefa pelo índice
+        }
+      }
+    });
+  </script>
+</body>
+</html>
