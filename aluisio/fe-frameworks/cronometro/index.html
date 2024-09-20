@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
-    <div class="card">
+    <div id="app" class="card">
         <h1>Cronômetro</h1>
-        <div class="timer" id="display">00:00:00</div>
+        <div class="timer" id="display">{{ formattedTime}}</div>
         <div class="controls">
-          <button id="start">Iniciar</button>
-          <button id="stop" disabled>Parar</button>
-          <button id="reset">Zerar</button>
+          <button @click="startTimer" :disabled="isRunning" id="start">Iniciar</button>
+          <button @click="stopTimer" :disabled="!isRunning" id="stop">Parar</button>
+          <button @click="resetTimer" id="reset">Zerar</button>
         </div>
       </div>
+      <script src="script.js"></script>
 </body>
 </html>
