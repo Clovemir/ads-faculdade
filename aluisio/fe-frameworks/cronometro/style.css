@@ -1,0 +1,66 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .card {
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .timer {
+    font-size: 48px;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .controls {
+    margin-top: 20px;
+  }
+
+  .controls button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 1s ease;
+  }
+
+  .controls button:hover {
+    background-color: #2980b9;
+    transform: scale(1.1) ;
+    box-shadow: 1px 1px 4px black;
+  }
+
+  .controls button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+
+  .controls button.reset {
+    background-color: #e74c3c;
+  }
+
+  .controls button.reset:hover {
+    background-color: #c0392b;
+  }
