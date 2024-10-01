@@ -13,7 +13,7 @@ const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(app);
 
 // Captura do formulário e envio para o Firestore
-document.getElementById('viajando-form').addEventListener('submit', function(event) {
+document.getElementById('Viagem-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     // Captura os dados do formulário
@@ -36,5 +36,5 @@ document.getElementById('viajando-form').addEventListener('submit', function(eve
     });
 
     // Limpar formulário após envio
-    document.getElementById('viajando-form').reset();
+    document.getElementById('Viagem-form').reset();
 });
