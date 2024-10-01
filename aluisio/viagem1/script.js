@@ -9,8 +9,8 @@ const firebaseConfig = {
     measurementId: "G-J89L2QQMDS"
   };
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(app);
 
 // Captura do formulário e envio para o Firestore
 document.getElementById('viajando-form').addEventListener('submit', function(event) {
