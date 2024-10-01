@@ -6,12 +6,12 @@ const firebaseConfig = {
     projectId: "viajando-e35cd",
     storageBucket: "viajando-e35cd.appspot.com",
     messagingSenderId: "467759795258",
-    appId: "1:467759795258:web:5f536bbf9a2b357fae7903",
-    measurementId: "G-XB1DG1BF56"
+    appId: "1:467759795258:web:4b3a7bb6718a1ae3ae7903",
+    measurementId: "G-V8KMHMM9NV"
   };
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore(app);
+const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
 // Captura do formulário e envio para o Firestore
 document.getElementById('viagem-form').addEventListener('submit', function(event) {
