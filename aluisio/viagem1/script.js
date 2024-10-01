@@ -2,13 +2,13 @@
 const firebaseConfig = {
     apiKey: "AIzaSyAlQA523ozDdeibuaytsbOqIVmWHI95Bcw",
     authDomain: "viajando-e35cd.firebaseapp.com",
+    databaseURL: "https://viajando-e35cd-default-rtdb.firebaseio.com",
     projectId: "viajando-e35cd",
     storageBucket: "viajando-e35cd.appspot.com",
     messagingSenderId: "467759795258",
-    appId: "1:467759795258:web:c79b6343f523bb5bae7903",
-    measurementId: "G-C95R4HDWYR"
+    appId: "1:467759795258:web:5f536bbf9a2b357fae7903",
+    measurementId: "G-XB1DG1BF56"
   };
-
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(app);
