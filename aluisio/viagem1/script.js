@@ -1,13 +1,12 @@
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAlQA523ozDdeibuaytsbOqIVmWHI95Bcw",
-    authDomain: "viajando-e35cd.firebaseapp.com",
-    databaseURL: "https://viajando-e35cd-default-rtdb.firebaseio.com",
-    projectId: "viajando-e35cd",
-    storageBucket: "viajando-e35cd.appspot.com",
-    messagingSenderId: "467759795258",
-    appId: "1:467759795258:web:4b3a7bb6718a1ae3ae7903",
-    measurementId: "G-V8KMHMM9NV"
+    apiKey: "AIzaSyBwJkIalkDU1C_zXcxJAB63pwIKjGSjMOk",
+    authDomain: "viagem-965ad.firebaseapp.com",
+    projectId: "viagem-965ad",
+    storageBucket: "viagem-965ad.appspot.com",
+    messagingSenderId: "938784231164",
+    appId: "1:938784231164:web:6aee8263995bb0ce4ad179",
+    measurementId: "G-J89L2QQMDS"
   };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
