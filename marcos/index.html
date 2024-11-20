@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alarmes Valorant</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: lightgray;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      margin-top: 50px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: darkslategray;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid lightgray;
+      width: calc(100% - 120px);
+    }
+
+    .form-control.invalid {
+      border-color: red;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-success {
+      background-color: green;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background-color: darkgreen;
+    }
+
+    .btn-danger {
+      background-color: red;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: darkred;
+    }
+
+    .btn-warning {
+      background-color: gold;
+      color: white;
+    }
+
+    .btn-warning:hover {
+      background-color: darkgoldenrod;
+    }
+
+    .list-group {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .list-group-item {
+      background-color: snow;
+      border: 1px solid lightgray;
+      margin-bottom: 10px;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 4px;
+      transition: transform 0.3s;
+    }
+
+    .list-group-item:hover {
+      transform: scale(1.05);
+    }
+
+    .time-left {
+      font-weight: bold;
+      color: green;
+    }
+
+    .time-passed {
+      font-weight: bold;
+      color: red;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-danger {
+      font-size: 14px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app" class="container">
+    <h1>Alarmes Valorant</h1>
+
+    <div class="row mb-4">
+      <div class="col-md-8 offset-md-2">
+        <div class="input-group">
+          <input 
+            v-model="novoAlarmeHora" 
+            type="text" 
+            :class="{'form-control': true, 'invalid': horaInvalida}" 
+            placeholder="Digite o horário (HH:mm)" 
+            aria-label="Horário do alarme"
+            @input="validarHora"
+          />
+          <button class="btn btn-success" @click="adicionarAlarme">Adicionar Alarme</button>
+        </div>
+        <div v-if="horaInvalida" class="text-danger">Hora inválida! Exemplo: 14:30</div>
+      </div>
+    </div>
+
+    <ul class="list-group">
+      <li v-for="alarme in alarmes" :key="alarme.id" class="list-group-item">
+        <div>
+          <strong>{{ alarme.hora }}</strong>
+          <div v-if="alarme.tempoRestante !== 'Alarme tocado!'" class="time-left">
+            Tempo Restante: {{ alarme.tempoRestante }}
+          </div>
+          <div v-if="alarme.tempoRestante === 'Alarme tocado!'" class="time-passed">
+            Alarme tocado!
+          </div>
+        </div>
+        <button class="btn btn-danger btn-sm" @click="excluirAlarme(alarme.id)">Excluir</button>
+      </li>
+    </ul>
+
+    <div class="text-center mt-4">
+      <button class="btn btn-warning" @click="limparTodosAlarmes">Limpar Todos</button>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        novoAlarmeHora: '',
+        alarmes: [],
+        horaInvalida: false
+      },
+      created() {
+        this.carregarAlarmes();
+        this.iniciarContagemTempo();
+      },
+      methods: {
+        carregarAlarmes() {
+          const alarmes = localStorage.getItem('alarmes');
+          this.alarmes = alarmes ? JSON.parse(alarmes) : [];
+        },
+        adicionarAlarme() {
+          if (this.novoAlarmeHora && !this.horaInvalida) {
+            const novoAlarme = { 
+              id: Date.now(), 
+              hora: this.novoAlarmeHora,
+              tempoRestante: '' 
+            };
+            this.alarmes.push(novoAlarme);
+            this.salvarAlarmes();
+            this.novoAlarmeHora = '';
+            this.horaInvalida = false; // Resetar status de hora inválida
+          } else {
+            alert('Insira um horário válido');
+          }
+        },
+        excluirAlarme(id) {
+          this.alarmes = this.alarmes.filter(alarme => alarme.id !== id);
+          this.salvarAlarmes();
+        },
+        limparTodosAlarmes() {
+          this.alarmes = [];
+          this.salvarAlarmes();
+        },
+        salvarAlarmes() {
+          localStorage.setItem('alarmes', JSON.stringify(this.alarmes));
+        },
+        iniciarContagemTempo() {
+          const atualizarAlarmes = () => {
+            const agora = new Date();
+            this.alarmes.forEach(alarme => {
+              const [hora, minutos] = alarme.hora.split(':').map(Number);
+              const alarmeHora = new Date();
+              alarmeHora.setHours(hora, minutos, 0, 0);
+              
+              // Verificar se o alarme é no próximo dia (caso o horário já tenha passado)
+              if (alarmeHora < agora) {
+                alarmeHora.setDate(alarmeHora.getDate() + 1); // Definir o alarme para o próximo dia
+              }
+
+              const tempoRestante = alarmeHora - agora;
+
+              if (tempoRestante > 0) {
+                alarme.tempoRestante = this.formatarTempo(tempoRestante);
+              } else if (alarme.tempoRestante !== 'Alarme tocado!') {
+                alarme.tempoRestante = 'Alarme tocado!';
+                this.tocarSom();
+              }
+            });
+          };
+
+          setInterval(atualizarAlarmes, 1000); // Atualizar alarmes a cada segundo
+        },
+        formatarTempo(tempoRestante) {
+          const segundos = Math.floor(tempoRestante / 1000);
+          const minutos = Math.floor(segundos / 60);
+          const horas = Math.floor(minutos / 60);
+          const restanteSegundos = segundos % 60;
+          const restanteMinutos = minutos % 60;
+
+          return `${this.preencherComZero(horas)}:${this.preencherComZero(restanteMinutos)}:${this.preencherComZero(restanteSegundos)}`;
+        },
+        preencherComZero(valor) {
+          return valor < 10 ? '0' + valor : valor;
+        },
+        tocarSom() {
+          const audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+          audio.play();
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

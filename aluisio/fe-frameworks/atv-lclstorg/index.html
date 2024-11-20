@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerta de Data e Horário - Valorant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>Valorant - Horario de Jogo</h1>
+        <form @submit.prevent="addAgendamento" class="form">
+            <input type="date" v-model="novaData" required>
+            <input type="time" v-model="novoHorario" required>
+            <button type="submit">Agendar</button>
+        </form>
+        <ul class="agendamentos-list">
+            <li v-for="(agendamento, index) in agendamentos" :key="index" class="agendamento-item">
+                <span>{{ agendamento.data }} - {{ agendamento.horario }}</span>
+                <div class="buttons">
+                    <button @click="editAgendamento(index)" class="btn-edit">Editar</button>
+                    <button @click="deleteAgendamento(index)" class="btn-delete">Excluir</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
